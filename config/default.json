@@ -1,4 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://talha123:talha123@devconnector.ee7ij8r.mongodb.net/?appName=DevConnector",
-    "jwtSecret": "mysecrettoken"
-}
