@@ -6,7 +6,7 @@ module.exports = function (req, res, next) {
     const token = req.header('x-auth-token');
     //Check if no token
     if (!token) {
-        res.status(401).json({ msg: 'No token, authorization failed' });
+        return res.status(401).json({ msg: 'No token, authorization failed' });
     }
 
     //Verify token
@@ -15,6 +15,6 @@ module.exports = function (req, res, next) {
         req.user = decoded.user;
         next();
     } catch (err) {
-        res.status(401).json({ msg: 'Invalid token' });
+        return res.status(401).json({ msg: 'Invalid token' });
     }
 }
