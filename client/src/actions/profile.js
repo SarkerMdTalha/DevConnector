@@ -161,7 +161,10 @@ export const deleteExperience = id => async dispatch => {
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: {
+                msg: err.response ? err.response.statusText : err.message,
+                status: err.response ? err.response.status : null
+            }
         });
 
     }
@@ -183,7 +186,10 @@ export const deleteEducation = id => async dispatch => {
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: {
+                msg: err.response ? err.response.statusText : err.message,
+                status: err.response ? err.response.status : null
+            }
         });
 
     }
@@ -210,7 +216,10 @@ export const deleteAccount = () => async dispatch => {
         } catch (err) {
             dispatch({
                 type: PROFILE_ERROR,
-                payload: { msg: err.response.statusText, status: err.response.status }
+                payload: {
+                    msg: err.response ? err.response.statusText : err.message,
+                    status: err.response ? err.response.status : null
+                }
             });
 
         }
@@ -234,7 +243,10 @@ export const getProfiles = () => async dispatch => {
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: {
+                msg: err.response ? err.response.statusText : err.message,
+                status: err.response ? err.response.status : null
+            }
         });
 
     }
@@ -256,7 +268,10 @@ export const getProfileById = (userId) => async dispatch => {
     } catch (err) {
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
+            payload: {
+                msg: err.response ? err.response.statusText : err.message,
+                status: err.response ? err.response.status : null
+            }
         });
 
     }
