@@ -1,0 +1,6 @@
+{
+    "mongoURI": "mongodb+srv://talha123:talha123@devconnector.ee7ij8r.mongodb.net/?appName=DevConnector",
+    "jwtSecret": "mysecrettoken",
+    "githubClientId": "Ov23li8YOlgiD8TZ5Uj3",
+    "githubSecret": "5061f15fd7440e2366c1d005315288e8e60163a2"
+}
