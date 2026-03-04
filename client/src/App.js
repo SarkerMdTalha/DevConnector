@@ -13,6 +13,9 @@ import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfiles';
 import AddExperience from './components/profile-forms/AddExperience';
 import AddEducation from './components/profile-forms/AddEducation';
+import Profiles from './components/profiles/Profiles';
+import Profile from './components/profile/Profile';
+import Posts from './components/posts/Posts';
 //Redux 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -47,11 +50,14 @@ const App = () => {
               {/* other routes are wrapped in the section container */}
               <Route path='/register' element={<Register />} />
               <Route path='/login' element={<Login />} />
+              <Route path='/profiles' element={<Profiles />} />
+              <Route path='/profile/:id' element={<Profile />} />
               <Route path='/dashboard' element={<PrivateRoute element={<Dashboard />} />} />
               <Route path='/create-profile' element={<PrivateRoute element={<CreateProfile />} />} />
               <Route path='/edit-profile' element={<PrivateRoute element={<EditProfile />} />} />
               <Route path='/add-experience' element={<PrivateRoute element={<AddExperience />} />} />
               <Route path='/add-education' element={<PrivateRoute element={<AddEducation />} />} />
+              <Route path='/posts' element={<PrivateRoute element={<Posts />} />} />
 
 
             </Routes>

@@ -1,65 +1,72 @@
-import React, { Fragment, useState,useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
-import { createProfile,getCurrentProfile } from '../../actions/profile';
+import { createProfile, getCurrentProfile } from '../../actions/profile';
 import { useNavigate, Link } from 'react-router-dom';
 
-const EditProfile = ({ createProfile,getCurrentProfile,profile: { loading, profile } }) => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        company: '',
-        website: '',
-        location: '',
-        status: '',
-        skills: '',
-        githubusername: '',
-        bio: '',
-        twitter: '',
-        facebook: '',
-        linkedin: '',
-        youtube: '',
-        instagram: ''
-    });
+const EditProfile = ({ createProfile, getCurrentProfile, profile: { loading, profile } }) => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    company: '',
+    website: '',
+    location: '',
+    status: '',
+    skills: '',
+    githubusername: '',
+    bio: '',
+    twitter: '',
+    facebook: '',
+    linkedin: '',
+    youtube: '',
+    instagram: ''
+  });
 
-    const [displaySocialInputs, toggleSocialInputs] = useState(false);
+  const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
-    useEffect(() => {
-        getCurrentProfile();
-        setFormData({
-            company: loading || !profile.company ? '' : profile.company,
-            website: loading || !profile.website ? '' : profile.website,
-            location: loading || !profile.location ? '' : profile.location,
-            status: loading || !profile.status ? '' : profile.status,
-            skills: loading || !profile.skills ? '' : profile.skills.join(','),
-            githubusername: loading || !profile.githubusername ? '' : profile.githubusername,
-            bio: loading || !profile.bio ? '' : profile.bio,
-            twitter: loading || !profile.social ? '' : profile.social.twitter,
-            facebook: loading || !profile.social ? '' : profile.social.facebook,
-            linkedin: loading || !profile.social ? '' : profile.social.linkedin,
-            youtube: loading || !profile.social ? '' : profile.social.youtube,
-            instagram: loading || !profile.social ? '' : profile.social.instagram
-        });
-    }, [loading, profile]);
+  // fetch profile only once when component mounts
+  useEffect(() => {
+    getCurrentProfile();
+  }, [getCurrentProfile]);
 
-
-    const { company,
-        website,
-        location, status, skills, githubusername, bio, twitter, facebook, linkedin, youtube, instagram } = formData;
-    
-
-
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-
-    const onSubmit = e => {
-        e.preventDefault();
-        createProfile(formData, navigate, true);
+  // populate local form state when profile data arrives (or when loading completes)
+  useEffect(() => {
+    if (profile && !loading) {
+      setFormData({
+        company: profile.company || '',
+        website: profile.website || '',
+        location: profile.location || '',
+        status: profile.status || '',
+        skills: profile.skills ? profile.skills.join(',') : '',
+        githubusername: profile.githubusername || '',
+        bio: profile.bio || '',
+        twitter: profile.social ? profile.social.twitter || '' : '',
+        facebook: profile.social ? profile.social.facebook || '' : '',
+        linkedin: profile.social ? profile.social.linkedin || '' : '',
+        youtube: profile.social ? profile.social.youtube || '' : '',
+        instagram: profile.social ? profile.social.instagram || '' : ''
+      });
     }
-    return(
+  }, [loading, profile]);
+
+
+  const { company,
+    website,
+    location, status, skills, githubusername, bio, twitter, facebook, linkedin, youtube, instagram } = formData;
+
+
+
+  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+
+  const onSubmit = e => {
+    e.preventDefault();
+    createProfile(formData, navigate, true);
+  }
+  return (
     <Fragment>
       <h1 className="large text-primary">
         Edit Your Profile
-      </h1> 
+      </h1>
       <p className="lead">
         <i className="fas fa-user"></i> Let's get some information to make your
         profile stand out
@@ -79,27 +86,27 @@ const EditProfile = ({ createProfile,getCurrentProfile,profile: { loading, profi
             <option value="Other">Other</option>
           </select>
           <small className="form-text"
-            >Give us an idea of where you are at in your career</small>
+          >Give us an idea of where you are at in your career</small>
         </div>
         <div className="form-group">
           <input type="text" placeholder="Company" name="company" value={company} onChange={e => onChange(e)} />
           <small className="form-text"
-            >Could be your own company or one you work for</small>
+          >Could be your own company or one you work for</small>
         </div>
         <div className="form-group">
-          <input type="text" placeholder="Website" name="website" value={website} onChange={e => onChange(e)}/>
+          <input type="text" placeholder="Website" name="website" value={website} onChange={e => onChange(e)} />
           <small className="form-text"
-            >Could be your own or a company website</small>
+          >Could be your own or a company website</small>
         </div>
         <div className="form-group">
-          <input type="text" placeholder="Location" name="location" value={location} onChange={e => onChange(e)}/>
+          <input type="text" placeholder="Location" name="location" value={location} onChange={e => onChange(e)} />
           <small className="form-text"
-            >City & state suggested (eg. Boston, MA)</small>
+          >City & state suggested (eg. Boston, MA)</small>
         </div>
         <div className="form-group">
           <input type="text" placeholder="* Skills" name="skills" value={skills} onChange={e => onChange(e)} />
           <small className="form-text"
-            >Please use comma separated values (eg.
+          >Please use comma separated values (eg.
             HTML,CSS,JavaScript,PHP)</small>
         </div>
         <div className="form-group">
@@ -107,9 +114,9 @@ const EditProfile = ({ createProfile,getCurrentProfile,profile: { loading, profi
             type="text"
             placeholder="Github Username"
             name="githubusername"
-            value={githubusername} onChange={e => onChange(e)}/>
+            value={githubusername} onChange={e => onChange(e)} />
           <small className="form-text"
-            >If you want your latest repos and a Github link, include your
+          >If you want your latest repos and a Github link, include your
             username</small>
         </div>
         <div className="form-group">
@@ -125,46 +132,46 @@ const EditProfile = ({ createProfile,getCurrentProfile,profile: { loading, profi
         </div>
 
         {displaySocialInputs && <Fragment>
-            <div className="form-group social-input">
-          <i className="fab fa-twitter fa-2x"></i>
-          <input type="text" placeholder="Twitter URL" name="twitter" value={twitter} onChange={e => onChange(e)}/>
-        </div>
+          <div className="form-group social-input">
+            <i className="fab fa-twitter fa-2x"></i>
+            <input type="text" placeholder="Twitter URL" name="twitter" value={twitter} onChange={e => onChange(e)} />
+          </div>
 
-        <div className="form-group social-input">
-          <i className="fab fa-facebook fa-2x"></i>
-          <input type="text" placeholder="Facebook URL" name="facebook" value={facebook} onChange={e => onChange(e)} />
-        </div>
+          <div className="form-group social-input">
+            <i className="fab fa-facebook fa-2x"></i>
+            <input type="text" placeholder="Facebook URL" name="facebook" value={facebook} onChange={e => onChange(e)} />
+          </div>
 
-        <div className="form-group social-input">
-          <i className="fab fa-youtube fa-2x"></i>
-          <input type="text" placeholder="YouTube URL" name="youtube" value={youtube} onChange={e => onChange(e)}/>
-        </div>
+          <div className="form-group social-input">
+            <i className="fab fa-youtube fa-2x"></i>
+            <input type="text" placeholder="YouTube URL" name="youtube" value={youtube} onChange={e => onChange(e)} />
+          </div>
 
-        <div className="form-group social-input">
-          <i className="fab fa-linkedin fa-2x"></i>
-          <input type="text" placeholder="Linkedin URL" name="linkedin" value={linkedin} onChange={e => onChange(e)}/>
-        </div>
+          <div className="form-group social-input">
+            <i className="fab fa-linkedin fa-2x"></i>
+            <input type="text" placeholder="Linkedin URL" name="linkedin" value={linkedin} onChange={e => onChange(e)} />
+          </div>
 
-        <div className="form-group social-input">
-          <i className="fab fa-instagram fa-2x"></i>
-          <input type="text" placeholder="Instagram URL" name="instagram" value={instagram} onChange={e => onChange(e)}/>
-        </div>    
+          <div className="form-group social-input">
+            <i className="fab fa-instagram fa-2x"></i>
+            <input type="text" placeholder="Instagram URL" name="instagram" value={instagram} onChange={e => onChange(e)} />
+          </div>
 
         </Fragment>}
 
-        
+
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">Go Back</Link>
       </form>
     </Fragment>
-    )
+  )
 };
 
 EditProfile.propTypes = {
-    createProfile: PropTypes.func.isRequired,
-    profile: PropTypes.object.isRequired,
-    auth: PropTypes.object.isRequired,
-    getCurrentProfile: PropTypes.func.isRequired
+  createProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired
 
 };
 
